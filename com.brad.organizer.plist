@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.brad.organizer</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/python3</string>
+        <string>/Users/bradhilton/Library/Mobile Documents/com~apple~CloudDocs/GIT/downloads-organizer/organizer.py</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>21600</integer>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/Users/bradhilton/Library/Mobile Documents/com~apple~CloudDocs/GIT/downloads-organizer/log/organizer-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/bradhilton/Library/Mobile Documents/com~apple~CloudDocs/GIT/downloads-organizer/log/organizer-stderr.log</string>
+    <key>WorkingDirectory</key>
+    <string>/Users/bradhilton/Library/Mobile Documents/com~apple~CloudDocs/GIT/downloads-organizer</string>
+</dict>
+</plist>

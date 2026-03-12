@@ -1,0 +1,57 @@
+{
+  "downloads_path": "~/Downloads",
+  "unsorted_path": "~/Downloads/_unsorted",
+  "session_window_minutes": 90,
+  "min_age_hours": 24,
+  "confidence_threshold": 0.6,
+  "organize_interval_hours": 6,
+  "log_retention_days": 30,
+  "dry_run": true,
+  "symlink_originals": false,
+  "whitelisted_apps": {
+    "Blender": {
+      "applescript": true,
+      "process_name": "Blender",
+      "script": "tell application \"Blender\" to get file of document 1"
+    },
+    "Bambu Studio": {
+      "applescript": false,
+      "process_name": "BambuStudio"
+    },
+    "Finder": {
+      "applescript": true,
+      "process_name": "Finder",
+      "script": "tell application \"Finder\" to get POSIX path of (target of front window as alias)"
+    },
+    "Visual Studio Code": {
+      "applescript": false,
+      "process_name": "Electron"
+    },
+    "Adobe Photoshop": {
+      "applescript": true,
+      "process_name": "Adobe Photoshop",
+      "script": "tell application \"Adobe Photoshop 2025\" to get file path of current document"
+    },
+    "Preview": {
+      "applescript": true,
+      "process_name": "Preview",
+      "script": "tell application \"Preview\" to get path of front document"
+    }
+  },
+  "extension_affinity": {
+    ".svg": [".3mf", ".stl", ".blend", ".ai", ".psd"],
+    ".stl": [".3mf", ".blend"],
+    ".3mf": [".stl", ".blend", ".svg"],
+    ".gcode": [".3mf", ".stl"],
+    ".png": [".psd", ".ai", ".blend", ".3mf", ".html"],
+    ".jpg": [".psd", ".ai", ".html"],
+    ".jpeg": [".psd", ".ai", ".html"],
+    ".pdf": [".doc", ".docx", ".psd", ".ai"],
+    ".zip": [".3mf", ".blend", ".psd"],
+    ".css": [".html", ".js", ".jsx"],
+    ".js": [".html", ".css", ".jsx"],
+    ".py": [".py", ".json", ".yaml"]
+  },
+  "ignore_extensions": [".crdownload", ".part", ".tmp", ".download"],
+  "ignore_prefixes": ["."]
+}

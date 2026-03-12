@@ -1,0 +1,5 @@
+log/
+*.db
+.DS_Store
+__pycache__/
+screenshot_scanner_bin
