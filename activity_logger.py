@@ -19,7 +19,9 @@ import datetime
 import sqlite3
 import shutil
 import tempfile
-# No external dependencies — uses macOS built-in xattr command
+import plistlib
+from urllib.parse import urlparse
+# No external dependencies beyond stdlib — uses macOS built-in xattr command
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(SCRIPT_DIR, "config.json")
@@ -422,7 +424,6 @@ def detect_sent_files(conn, frontmost_app, modified_files):
 def extract_domain(url):
     """Pull domain from URL."""
     try:
-        from urllib.parse import urlparse
         parsed = urlparse(url)
         domain = parsed.netloc
         # Strip www.
@@ -434,7 +435,7 @@ def extract_domain(url):
 
 
 def trim_old_entries(config):
-    retention = config.get("log_retention_days", 100)
+    retention = config.get("log_retention_days", 30)
     cutoff = datetime.datetime.now() - datetime.timedelta(days=retention)
     if not os.path.exists(LOG_PATH):
         return

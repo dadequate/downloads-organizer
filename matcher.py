@@ -45,7 +45,7 @@ def score_candidates(download_ext, download_ts, entries, config):
     file_timestamps = {}
     for entry in entries:
         ts = datetime.datetime.fromisoformat(entry["ts"])
-        for fp in entry.get("modified_files", entry.get("open_files", [])):
+        for fp in entry.get("modified_files", []):
             file_freq[fp] += 1
             # Track closest timestamp to download
             if fp not in file_timestamps:

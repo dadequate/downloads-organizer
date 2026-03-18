@@ -42,7 +42,7 @@ def main():
         for e in entries:
             if e.get("frontmost"):
                 apps.add(e["frontmost"])
-            for fp in e.get("modified_files", e.get("open_files", [])):
+            for fp in e.get("modified_files", []):
                 files.add(os.path.basename(fp))
         print(f"Last 6 hours: {len(entries)} log ticks")
         print(f"Active apps: {', '.join(sorted(apps))}")

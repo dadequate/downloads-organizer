@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR="$HOME/downloads-organizer"
+PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 AGENTS_DIR="$HOME/Library/LaunchAgents"
 
 echo "=== Downloads Context Organizer — Install ==="
