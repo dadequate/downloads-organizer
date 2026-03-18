@@ -40,6 +40,7 @@ def score_candidates(download_ext, download_ts, entries, config):
     affinity_map = config.get("extension_affinity", {})
     affinities = affinity_map.get(download_ext, [])
     downloads_dir = os.path.expanduser(config.get("downloads_path", "~/Downloads"))
+    organizer_dir = SCRIPT_DIR
 
     # Count appearances of each recently modified file
     file_freq = Counter()
@@ -47,8 +48,8 @@ def score_candidates(download_ext, download_ts, entries, config):
     for entry in entries:
         ts = datetime.datetime.fromisoformat(entry["ts"])
         for fp in entry.get("modified_files", []):
-            # Skip files inside the Downloads directory — they're downloads, not projects
-            if fp.startswith(downloads_dir + "/"):
+            # Skip files inside Downloads or the organizer's own directory
+            if fp.startswith(downloads_dir + "/") or fp.startswith(organizer_dir + "/"):
                 continue
             file_freq[fp] += 1
             # Track closest timestamp to download
