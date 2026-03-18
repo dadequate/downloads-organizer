@@ -84,9 +84,35 @@ def score_candidates(download_ext, download_ts, entries, config):
     scores.sort(key=lambda x: x[1], reverse=True)
     return scores
 
+
+def score_directories(file_scores):
+    """
+    Aggregate file-level scores into directory-level scores.
+    Directory score = best file score + 0.1 * log2(number of files in dir).
+    This way a directory with many active files beats one with a single
+    high-scoring file.
+    """
+    from math import log2
+    dir_files = {}  # dir -> [(path, score), ...]
+    for fp, score in file_scores:
+        d = os.path.dirname(fp)
+        dir_files.setdefault(d, []).append((fp, score))
+
+    dir_scores = []
+    for d, files in dir_files.items():
+        best_file, best_score = max(files, key=lambda x: x[1])
+        breadth_bonus = 0.1 * log2(1 + len(files))  # 1 file=0.1, 4 files=0.23, 10=0.35
+        dir_scores.append((d, best_file, best_score + breadth_bonus))
+
+    dir_scores.sort(key=lambda x: x[2], reverse=True)
+    return dir_scores
+
+
 def find_best_match(download_path, download_ts, config):
     """
     Returns (best_project_file_path, score) or (None, 0).
+    Scores are aggregated by directory so a project with many active files
+    beats a stray high-scoring file in an unrelated directory.
     """
     window_min = config.get("session_window_minutes", 90)
     window_start = download_ts - datetime.timedelta(minutes=window_min)
@@ -97,14 +123,18 @@ def find_best_match(download_path, download_ts, config):
         return None, 0
 
     download_ext = os.path.splitext(download_path)[1].lower()
-    scored = score_candidates(download_ext, download_ts, entries, config)
+    file_scores = score_candidates(download_ext, download_ts, entries, config)
 
-    if not scored:
+    if not file_scores:
         return None, 0
 
-    best_path, best_score = scored[0]
+    dir_scores = score_directories(file_scores)
+    if not dir_scores:
+        return None, 0
+
+    best_dir, best_file, best_score = dir_scores[0]
     threshold = config.get("confidence_threshold", 0.6)
 
     if best_score >= threshold:
-        return best_path, best_score
+        return best_file, best_score
     return None, best_score

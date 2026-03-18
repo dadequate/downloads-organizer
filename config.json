@@ -47,7 +47,7 @@
     ".jpg": [".psd", ".ai", ".html"],
     ".jpeg": [".psd", ".ai", ".html"],
     ".pdf": [".doc", ".docx", ".psd", ".ai"],
-    ".zip": [".3mf", ".blend", ".psd"],
+    ".zip": [],
     ".css": [".html", ".js", ".jsx"],
     ".js": [".html", ".css", ".jsx"],
     ".py": [".py", ".json", ".yaml"]
