@@ -6,6 +6,7 @@
   "confidence_threshold": 0.6,
   "organize_interval_hours": 6,
   "log_retention_days": 30,
+  "log_max_size_mb": 20,
   "dry_run": false,
   "symlink_originals": false,
   "whitelisted_apps": {

@@ -436,10 +436,22 @@ def extract_domain(url):
 
 def trim_old_entries(config):
     retention = config.get("log_retention_days", 30)
+    max_size_mb = config.get("log_max_size_mb", 20)
     cutoff = datetime.datetime.now() - datetime.timedelta(days=retention)
     if not os.path.exists(LOG_PATH):
         return
     try:
+        # Rotate if file exceeds max size
+        size_mb = os.path.getsize(LOG_PATH) / (1024 * 1024)
+        rotated_path = LOG_PATH + ".1"
+        if size_mb > max_size_mb:
+            # Keep one rotated backup, discard older
+            if os.path.exists(rotated_path):
+                os.remove(rotated_path)
+            os.rename(LOG_PATH, rotated_path)
+            return
+
+        # Trim entries older than retention period
         with open(LOG_PATH, "r") as f:
             lines = f.readlines()
         kept = []
